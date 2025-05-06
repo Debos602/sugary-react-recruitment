@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import Loading from "../../component/Loading/Loading";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -77,11 +78,11 @@ const Users = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading />;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="p-4 h-screen">
+        <div className="p-4 min-h-screen">
             <h1 className="text-2xl font-bold mb-4 text-gray-950">
                 Users List
             </h1>

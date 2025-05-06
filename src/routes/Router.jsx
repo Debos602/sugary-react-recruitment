@@ -5,10 +5,12 @@ import NotFound from "../pages/NotFound/NotFound";
 import ErrorBoundary from "../pages/ErrorBoundary/ErrorBoundary";
 import DashboardLayout from "../pages/Dashboard/Layout/DashboardLayout";
 import DashboardOverview from "../pages/Dashboard/DashboarOverview/DashboardOverview";
+import Login from "../pages/Login/Login";
 
 export const router = createBrowserRouter([
+    { path: "/", element: <Login /> }, // Login route
     {
-        path: "/",
+        path: "/dashboard",
         element: <DashboardLayout />,
         errorElement: <ErrorBoundary />, // Error boundary for root
         children: [

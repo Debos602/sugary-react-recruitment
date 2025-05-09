@@ -1,13 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { RxAvatar } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CiSettings } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
+import { useAppDispatch } from "../../../redux/features/hook";
+import { logout } from "../../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 const Dashbar = () => {
+    // const user = useAppSelector((state) => state.auth.user);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -19,6 +25,12 @@ const Dashbar = () => {
 
     const toggleSearch = () => {
         setSearchOpen(!searchOpen);
+    };
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+        navigate("/");
+        toast.success("Logout successful!");
     };
 
     const handleClickOutside = (event) => {
@@ -89,6 +101,7 @@ const Dashbar = () => {
                                     Settings
                                 </Link>
                                 <Link
+                                    onClick={handleLogout}
                                     to="#"
                                     className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2"
                                 >

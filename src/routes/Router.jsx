@@ -6,12 +6,17 @@ import ErrorBoundary from "../pages/ErrorBoundary/ErrorBoundary";
 import DashboardLayout from "../pages/Dashboard/Layout/DashboardLayout";
 import DashboardOverview from "../pages/Dashboard/DashboarOverview/DashboardOverview";
 import Login from "../pages/Login/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // Login route
     {
         path: "/dashboard",
-        element: <DashboardLayout />,
+        element: (
+            <ProtectedRoute allowedRoles={["admin", "user"]}>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
         errorElement: <ErrorBoundary />, // Error boundary for root
         children: [
             { index: true, element: <DashboardOverview /> },

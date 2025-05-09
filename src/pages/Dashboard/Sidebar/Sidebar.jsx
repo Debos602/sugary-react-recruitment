@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaShoppingCart, FaTachometerAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../../assets/Logo.png";
 import { MdOutlineBakeryDining } from "react-icons/md";
 
 const Sidebar = () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 export const Input = ({
     id,
@@ -27,4 +27,12 @@ export const Input = ({
             />
         </div>
     );
+};
+
+Input.propTypes = {
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
 };

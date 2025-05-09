@@ -1,16 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { logout, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "https://sugarytestapi.azurewebsites.net",
     credentials: "same-origin",
     prepareHeaders: (headers, { getState }) => {
         // Remove type assertion and access state directly
+        headers.set("Content-Type", "application/json");
         const token = getState().auth.token;
 
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }
-        console.log("Headers:", headers);
         return headers;
     },
 });

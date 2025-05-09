@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 export const Form = ({ children, onSubmit, className = "", ...props }) => {
     return (
@@ -10,4 +10,10 @@ export const Form = ({ children, onSubmit, className = "", ...props }) => {
             {children}
         </form>
     );
+};
+
+Form.propTypes = {
+    children: PropTypes.node.isRequired,
+    onSubmit: PropTypes.func,
+    className: PropTypes.string,
 };

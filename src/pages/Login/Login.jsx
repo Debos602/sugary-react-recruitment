@@ -12,30 +12,47 @@ import { setUser } from "../../redux/features/auth/authSlice";
 
 const Login = () => {
     const [userLogin, { isLoading }] = useLoginMutation();
-    const navigate = useNavigate(); // Import useNavigate from react-router-dom
-    const dispatch = useAppDispatch(); // Import useAppDispatch from your Redux store
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const userName = formData.get("userName"); // Changed to userName
-        const password = formData.get("password");
-        const credentials = { userName, password }; // Updated to match API format
+
+        const form = e.target;
+        const credentials = {
+            UserName: form.UserName.value,
+            Password: form.Password.value,
+        };
+
+        console.log("Submitting:", typeof credentials);
+
+        if (!credentials.UserName || !credentials.Password) {
+            toast.error("Please fill in all fields.");
+            return;
+        }
+
         userLogin(credentials)
             .unwrap()
             .then((response) => {
+                if (!response.User || !response.Token) {
+                    toast.error("Received invalid response from server.");
+                    return;
+                }
+
+                console.log("Login response:", response);
                 dispatch(
                     setUser({
-                        user: response.user,
-                        token: response.accessToken,
-                        refreshToken: response.refreshToken,
+                        user: response.User,
+                        token: response.Token,
+                        refreshToken: response.RefreshToken,
                     })
                 );
-                console.log("Login successful:", response);
                 toast.success("Login successful!");
-                navigate("/dashboard"); // Redirect to dashboard after successful login
+                navigate("/dashboard");
             })
             .catch((error) => {
                 console.error("Login failed:", error);
+                toast.error("Login failed!");
             });
     };
 
@@ -44,7 +61,7 @@ const Login = () => {
             {/* Left Side */}
             <AnimationWrapper animationType="slideLeft">
                 <div className="md:w-1/2 flex flex-col justify-center items-center bg-gradient-to-br from-gray-900 to-gray-700 text-gray-100 p-10">
-                    <div className="flex justify-center items-center">
+                    <div className="flex justify-center items-center mb-6">
                         <MdOutlineBakeryDining size={40} className="mr-2" />
                         <span className="text-2xl font-bold">Bloom&Tech</span>
                     </div>
@@ -56,7 +73,7 @@ const Login = () => {
                     <AnimationWrapper animationType="fadeUp" delay={0.4}>
                         <p className="text-lg text-gray-300 text-center max-w-sm">
                             Log in to access your dashboard and manage your
-                            account effortlessly. We're glad to see you again!
+                            account effortlessly. We are glad to see you again!
                         </p>
                     </AnimationWrapper>
                 </div>
@@ -72,29 +89,33 @@ const Login = () => {
                         <StaggeredAnimationWrapper selector="div, button, p">
                             <Form onSubmit={handleSubmit}>
                                 <Input
-                                    id="userName"
-                                    name="userName"
+                                    id="UserName"
+                                    name="UserName"
                                     type="text"
                                     label="Username or Email"
                                     placeholder="Enter your username or email"
                                     defaultValue="react@test.com"
                                 />
                                 <Input
-                                    id="password"
-                                    name="password"
+                                    id="Password"
+                                    name="Password"
                                     type="password"
                                     label="Password"
                                     placeholder="Enter your password"
                                     defaultValue="playful009"
                                 />
-                                <Button type="submit" disabled={isLoading}>
+                                <Button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full mt-4"
+                                >
                                     {isLoading ? "Logging in..." : "Login"}
                                 </Button>
                             </Form>
                             <p className="mt-5 text-sm text-center text-gray-600">
-                                Don't have an account?{" "}
+                                Do not have an account?{" "}
                                 <a
-                                    href="#"
+                                    href="/signup"
                                     className="text-gray-800 font-semibold hover:underline"
                                 >
                                     Sign up

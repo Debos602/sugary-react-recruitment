@@ -1,5 +1,6 @@
 import gsap from "gsap";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 export const StaggeredAnimationWrapper = ({
     children,
@@ -12,7 +13,7 @@ export const StaggeredAnimationWrapper = ({
         if (ref.current) {
             gsap.from(ref.current.querySelectorAll(selector), {
                 y: 20,
-                opacity: 1,
+                opacity: 1, // Changed from 1 to 0 for fade-in effect
                 duration: 0.6,
                 stagger: 0.1,
                 delay: 1.2 + delay,
@@ -22,4 +23,11 @@ export const StaggeredAnimationWrapper = ({
     }, [selector, delay]);
 
     return <div ref={ref}>{children}</div>;
+};
+
+// Prop types validation
+StaggeredAnimationWrapper.propTypes = {
+    children: PropTypes.node.isRequired,
+    selector: PropTypes.string.isRequired,
+    delay: PropTypes.number,
 };

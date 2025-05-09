@@ -1,10 +1,8 @@
-import { jwtDecode } from "jwt-decode"; // Correct the import statement
+import { jwtDecode } from "jwt-decode";
 
-// Utility function to decode the token
 export const verifyToken = (token) => {
     try {
-        // Cast the decoded token as CustomJwtPayload
-        return jwtDecode < CustomJwtPayload > token;
+        return jwtDecode(token); // কোনো <CustomJwtPayload> দরকার নেই
     } catch (error) {
         console.error("Invalid token", error);
         return null;

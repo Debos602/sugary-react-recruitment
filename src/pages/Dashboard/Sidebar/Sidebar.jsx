@@ -52,13 +52,13 @@ const Sidebar = () => {
                     </li>
                     <li>
                         <Link
-                            to="/dashboard/products"
-                            className={getLinkClasses("products")}
-                            onClick={() => handleRouteChange("products")}
+                            to="/dashboard/materials"
+                            className={getLinkClasses("Materials")}
+                            onClick={() => handleRouteChange("Materials")}
                         >
                             <FaShoppingCart />
                             <span className="hidden md:inline text-[16px] font-semibold">
-                                Products
+                                Materials
                             </span>
                         </Link>
                     </li>

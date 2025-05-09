@@ -1,11 +1,13 @@
 export default function Loading() {
     return (
-        <div className="flex items-center justify-center h-screen">
-            <div className="text-xl font-mono">
-                <span className="animate-typing overflow-hidden whitespace-nowrap border-r-2 border-r-gray-800 pr-1">
-                    Loading...
-                </span>
-            </div>
+        <div className="flex justify-center items-center h-screen space-x-2">
+            {[...Array(3)].map((_, i) => (
+                <div
+                    key={i}
+                    className="w-3 h-3 bg-gray-600 rounded-full animate-bounce"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                />
+            ))}
         </div>
     );
 }

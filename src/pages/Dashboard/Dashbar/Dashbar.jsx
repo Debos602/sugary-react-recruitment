@@ -1,24 +1,23 @@
 import { useState, useEffect, useRef } from "react";
-import { RxAvatar } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CiSettings } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
-import { useAppDispatch } from "../../../redux/features/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/features/hook";
 import { logout } from "../../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 
 const Dashbar = () => {
-    // const user = useAppSelector((state) => state.auth.user);
+    const user = useAppSelector((state) => state.auth.user);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
-
+    console.log("dashbar", user);
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
@@ -81,7 +80,11 @@ const Dashbar = () => {
                                 className="text-xl md:text-5xl cursor-pointer"
                                 onClick={toggleDropdown}
                             >
-                                <RxAvatar />
+                                <img
+                                    src={`https://d1wh1xji6f82aw.cloudfront.net/${user.Avatar}`}
+                                    alt="User Avatar"
+                                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+                                />
                             </div>
                         </div>
                         {dropdownOpen && (

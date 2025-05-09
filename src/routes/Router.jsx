@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../pages/Users/Users";
-import Products from "../pages/Products/Products";
 import NotFound from "../pages/NotFound/NotFound";
 import ErrorBoundary from "../pages/ErrorBoundary/ErrorBoundary";
 import DashboardLayout from "../pages/Dashboard/Layout/DashboardLayout";
 import DashboardOverview from "../pages/Dashboard/DashboarOverview/DashboardOverview";
 import Login from "../pages/Login/Login";
 import ProtectedRoute from "./ProtectedRoute";
+import Materials from "../pages/Materials/Materials";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // Login route
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <DashboardOverview /> },
             { path: "users", element: <Users /> },
-            { path: "products", element: <Products /> },
+            { path: "Materials", element: <Materials /> },
         ],
     },
     {

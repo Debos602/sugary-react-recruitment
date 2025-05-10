@@ -17,7 +17,7 @@ const Dashbar = () => {
     const [searchOpen, setSearchOpen] = useState(false);
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
-    console.log("dashbar", user);
+
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };

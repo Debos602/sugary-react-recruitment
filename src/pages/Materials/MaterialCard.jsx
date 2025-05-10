@@ -1,8 +1,19 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 const MaterialCard = ({ material }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const cardRef = useRef(null);
+    const imageRef = useRef(null);
+    const discountBadgeRef = useRef(null);
+    const exclusiveBadgeRef = useRef(null);
+    const overlayLeftRef = useRef(null);
+    const overlayRightRef = useRef(null);
+    const overlayFullRef = useRef(null);
+    const addButtonRef = useRef(null);
+    const quickViewButtonRef = useRef(null);
+
     const discountPercentage =
         material.SalesPrice < material.MinSalesPrice
             ? Math.round(
@@ -12,21 +23,157 @@ const MaterialCard = ({ material }) => {
               )
             : null;
 
+    useEffect(() => {
+        // Initial animations for badges
+        if (discountBadgeRef.current) {
+            gsap.fromTo(
+                discountBadgeRef.current,
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+            );
+        }
+        if (exclusiveBadgeRef.current) {
+            gsap.fromTo(
+                exclusiveBadgeRef.current,
+                { opacity: 0, y: -20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    delay: 0.2,
+                }
+            );
+        }
+
+        // Hover animations
+        if (isHovered) {
+            gsap.to(cardRef.current, {
+                scale: 1.05,
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+            if (imageRef.current) {
+                gsap.to(imageRef.current, {
+                    scale: 1.05,
+                    duration: 0.5,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayLeftRef.current) {
+                gsap.to(overlayLeftRef.current, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayRightRef.current) {
+                gsap.to(overlayRightRef.current, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayFullRef.current) {
+                gsap.to(overlayFullRef.current, {
+                    opacity: 0.2,
+                    duration: 0.5,
+                    ease: "power2.out",
+                });
+            }
+            if (addButtonRef.current) {
+                gsap.to(addButtonRef.current, {
+                    scale: 1.05,
+                    backgroundColor: "#2563eb",
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (quickViewButtonRef.current) {
+                gsap.to(quickViewButtonRef.current, {
+                    scale: 1.05,
+                    borderColor: "#93c5fd",
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+        } else {
+            gsap.to(cardRef.current, {
+                scale: 1,
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+            if (imageRef.current) {
+                gsap.to(imageRef.current, {
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayLeftRef.current) {
+                gsap.to(overlayLeftRef.current, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayRightRef.current) {
+                gsap.to(overlayRightRef.current, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (overlayFullRef.current) {
+                gsap.to(overlayFullRef.current, {
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                });
+            }
+            if (addButtonRef.current) {
+                gsap.to(addButtonRef.current, {
+                    scale: 1,
+                    backgroundColor: "#1f2937",
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+            if (quickViewButtonRef.current) {
+                gsap.to(quickViewButtonRef.current, {
+                    scale: 1,
+                    borderColor: "#e5e7eb",
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            }
+        }
+    }, [isHovered]);
+
     return (
         <div
-            className="relative flex flex-col h-full bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+            ref={cardRef}
+            className="relative flex flex-col h-full bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Badges - Top Left */}
             <div className="absolute top-3 left-3 z-10 flex flex-col space-y-2">
                 {discountPercentage && (
-                    <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                    <span
+                        ref={discountBadgeRef}
+                        className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm"
+                    >
                         {discountPercentage}% OFF
                     </span>
                 )}
                 {material.IsInHouse && (
-                    <span className="bg-green-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                    <span
+                        ref={exclusiveBadgeRef}
+                        className="bg-green-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm"
+                    >
                         Exclusive
                     </span>
                 )}
@@ -37,27 +184,25 @@ const MaterialCard = ({ material }) => {
                 {material.CoverPhoto && (
                     <>
                         <img
+                            ref={imageRef}
                             src={`https://d1wh1xji6f82aw.cloudfront.net/${material.CoverPhoto}`}
                             alt={material.Title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-cover"
                             loading="lazy"
                         />
 
                         {/* Hover Overlays */}
                         <div
-                            className={`absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-blue-500/20 to-transparent opacity-0 ${
-                                isHovered ? "opacity-100" : ""
-                            } transition-opacity duration-300`}
+                            ref={overlayLeftRef}
+                            className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-blue-500/20 to-transparent opacity-0"
                         />
                         <div
-                            className={`absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l from-blue-500/20 to-transparent opacity-0 ${
-                                isHovered ? "opacity-100" : ""
-                            } transition-opacity duration-300`}
+                            ref={overlayRightRef}
+                            className="absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l from-blue-500/20 to-transparent opacity-0"
                         />
                         <div
-                            className={`absolute inset-0 bg-blue-500/10 opacity-0 ${
-                                isHovered ? "opacity-20" : ""
-                            } transition-opacity duration-500`}
+                            ref={overlayFullRef}
+                            className="absolute inset-0 bg-blue-500/10 opacity-0"
                         />
                     </>
                 )}
@@ -107,11 +252,8 @@ const MaterialCard = ({ material }) => {
 
                         {/* Add to Cart Button */}
                         <button
-                            className={`px-3 py-2 mb-2 bg-gray-900 text-white text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center transform ${
-                                isHovered
-                                    ? "scale-105 bg-blue-600"
-                                    : "scale-100"
-                            }`}
+                            ref={addButtonRef}
+                            className="px-3 py-2 mb-2 bg-gray-900 text-white text-sm font-medium rounded-lg flex items-center justify-center"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -134,9 +276,8 @@ const MaterialCard = ({ material }) => {
 
                 {/* Quick View Button - Always at bottom */}
                 <button
-                    className={`mt-auto w-full py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center transform ${
-                        isHovered ? "scale-105 border-blue-300" : "scale-100"
-                    }`}
+                    ref={quickViewButtonRef}
+                    className="mt-auto w-full py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg flex items-center justify-center"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

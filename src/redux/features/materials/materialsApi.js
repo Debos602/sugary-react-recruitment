@@ -1,3 +1,4 @@
+import { generateParams } from "../../../utils/generateParams";
 import { baseApi } from "../../api/baseApi";
 
 export const materialsApi = baseApi.injectEndpoints({
@@ -6,8 +7,7 @@ export const materialsApi = baseApi.injectEndpoints({
             query: (params = {}) => ({
                 url: "/Materials/GetAll/",
                 method: "GET",
-                // params: generateParams(params),
-                params,
+                params: generateParams(params),
             }),
             providesTags: ["Materials"],
         }),

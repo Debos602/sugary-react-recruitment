@@ -14,9 +14,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     const userData = useAppSelector(selectCurrentUser); // Redux থেকে ইউজার ডাটা নিন
     const location = useLocation();
 
-    console.log("[ProtectedRoute] Token:", token);
-    console.log("[ProtectedRoute] User data from Redux:", userData); // ডিবাগিং
-
     if (!token) {
         console.log("[ProtectedRoute] No token found - redirecting to login");
         return <Navigate to="/" state={{ from: location }} replace />;
@@ -30,7 +27,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
         // API রেস্পন্স অনুযায়ী রোল এক্সট্র্যাক্ট করুন
         const userRole = userData?.Role?.Title;
-        console.log("[ProtectedRoute] User role from Redux:", userRole);
 
         if (!userRole) {
             throw new Error("Role information not found in user data");

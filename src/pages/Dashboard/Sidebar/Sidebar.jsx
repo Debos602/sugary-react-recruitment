@@ -1,23 +1,17 @@
-import { useState } from "react";
 import { FaShoppingCart, FaTachometerAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MdOutlineBakeryDining } from "react-icons/md";
 
 const Sidebar = () => {
-    const [activeRoute, setActiveRoute] = useState("/dashboard");
-    const navigate = useNavigate();
+    const location = useLocation(); // Get current path
 
-    // রুট পরিবর্তনের ফাংশন
-    const handleRouteChange = (route) => {
-        setActiveRoute(`/dashboard/${route}`);
-        navigate(`/dashboard/${route}`);
-    };
-
-    // লিঙ্ক স্টাইল ক্লাস জেনারেটর
     const getLinkClasses = (route) => {
         const baseClasses =
             "flex items-center py-3 px-2 my-2 space-x-4 rounded cursor-pointer transition-colors";
-        const isActive = activeRoute.includes(route);
+        const isActive =
+            location.pathname === `/dashboard/${route}` ||
+            (route === "" && location.pathname === "/dashboard");
+
         return `${baseClasses} ${
             isActive
                 ? "bg-gray-950 text-white"
@@ -39,11 +33,7 @@ const Sidebar = () => {
                 </div>
                 <ul className="flex flex-col mt-5 text-xl mx-1 md:px-4">
                     <li>
-                        <Link
-                            to="/dashboard"
-                            className={getLinkClasses("dashboard")}
-                            onClick={() => handleRouteChange("")}
-                        >
+                        <Link to="/dashboard" className={getLinkClasses("")}>
                             <FaTachometerAlt />
                             <span className="hidden md:inline text-[16px] font-semibold">
                                 Dashboard Overview
@@ -53,8 +43,7 @@ const Sidebar = () => {
                     <li>
                         <Link
                             to="/dashboard/materials"
-                            className={getLinkClasses("Materials")}
-                            onClick={() => handleRouteChange("Materials")}
+                            className={getLinkClasses("materials")}
                         >
                             <FaShoppingCart />
                             <span className="hidden md:inline text-[16px] font-semibold">
@@ -66,7 +55,6 @@ const Sidebar = () => {
                         <Link
                             to="/dashboard/users"
                             className={getLinkClasses("users")}
-                            onClick={() => handleRouteChange("users")}
                         >
                             <FaUser />
                             <span className="hidden md:inline text-[16px] font-semibold">

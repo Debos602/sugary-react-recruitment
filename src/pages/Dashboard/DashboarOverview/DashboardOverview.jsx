@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import MultiAxisLineChart from "../../../component/LineChart/LineChart";
 import DoughnutChartGray from "../../../component/DoughnutChartGray/DoughnutChartGray";
+import { useAppSelector } from "../../../redux/features/hook";
 
 const DashboardOverview = () => {
-    const [user, setUser] = useState({ name: "Debos Das", country: "USA" }); // Replace with dynamic user data
+    const user = useAppSelector((state) => state.auth.user); // Custom hook to get user data
+    console.log(user);
     const [quickActions, setQuickActions] = useState([
         {
             title: "My Tasks",
@@ -41,8 +43,6 @@ const DashboardOverview = () => {
     ];
 
     useEffect(() => {
-        // Fetch dynamic data (replace with actual API calls)
-        setUser({ name: "John Doe", country: "USA" }); // Example user data
         setQuickActions([
             {
                 title: "My Tasks",
@@ -76,7 +76,7 @@ const DashboardOverview = () => {
             {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6 bg-white shadow-md p-4 rounded-md">
                 <div className="text-2xl font-semibold text-gray-800">
-                    Welcome, {user.name}!
+                    Welcome, {user.Username}!
                 </div>
             </div>
 

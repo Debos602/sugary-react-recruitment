@@ -64,7 +64,7 @@ A modern, responsive React application built to demonstrate authentication, data
 ## 📁 Folder Structure (Simplified)
 
 # 1. Clone the repository
-git clone https://github.com/your-username/sugary-react-recruitment.git
+git clone https://github.com/Debos602/sugary-react-recruitment.git
 
 # 2. Navigate to the project folder
 cd sugary-react-recruitment

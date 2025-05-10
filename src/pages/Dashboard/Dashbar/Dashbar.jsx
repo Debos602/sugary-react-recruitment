@@ -52,8 +52,8 @@ const Dashbar = () => {
     }, []);
 
     return (
-        <section className="sticky top-0 z-50 max-w-full mx-auto px-5 py-4 bg-gray-200 border-b">
-            <div className="text-gray-950 text-[14px] md:text-[18px] border-amber-950 flex justify-between items-center dark:border-gray-600 dark:bg-gray-900 dark:text-amber-50">
+        <section className="sticky top-0 z-50 max-w-full mx-auto px-5 py-4 bg-gray-200 border-b dark:bg-gray-900">
+            <div className="text-gray-950 text-[14px] md:text-[18px] flex justify-between items-center dark:text-amber-50">
                 <h1 className="font-bold">Dashboard</h1>
                 <div className="flex items-center gap-6">
                     <div className="relative" ref={searchRef}>
@@ -65,51 +65,72 @@ const Dashbar = () => {
                                     searchOpen
                                         ? "w-64 opacity-100"
                                         : "w-0 opacity-0"
-                                } md:w-64 md:opacity-100`}
+                                } md:w-64 md:opacity-100 dark:bg-gray-700 dark:border-gray-600`}
                             />
                             <FaSearch
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer md:hidden"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer md:hidden dark:text-gray-300"
                                 onClick={toggleSearch}
                             />
                         </div>
                     </div>
                     <div className="relative" ref={dropdownRef}>
                         <div className="flex items-center gap-6">
-                            <IoNotifications className="text-2xl cursor-pointer" />
+                            <IoNotifications className="text-2xl cursor-pointer hover:text-blue-600 transition-colors dark:hover:text-blue-400" />
                             <div
-                                className="text-xl md:text-5xl cursor-pointer"
+                                className="cursor-pointer"
                                 onClick={toggleDropdown}
                             >
                                 <img
                                     src={`https://d1wh1xji6f82aw.cloudfront.net/${user.Avatar}`}
                                     alt="User Avatar"
-                                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+                                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-transparent hover:border-blue-500 transition-all"
                                 />
                             </div>
                         </div>
                         {dropdownOpen && (
-                            <div className="absolute right-0 top-[55px] mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
+                            <div className="absolute right-0 top-[55px] mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
+                                {/* User info section */}
+                                <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src={`https://d1wh1xji6f82aw.cloudfront.net/${user.Avatar}`}
+                                            alt="User Avatar"
+                                            className="w-10 h-10 rounded-full object-cover"
+                                        />
+                                        <div>
+                                            <p className="font-medium text-gray-900 dark:text-white">
+                                                {user.name || "User"}
+                                            </p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-300 truncate">
+                                                {user.email ||
+                                                    "user@example.com"}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Dropdown items */}
                                 <Link
                                     to="#"
-                                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2"
+                                    className="px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 flex items-center gap-3 transition-colors"
                                 >
-                                    <CgProfile />
+                                    <CgProfile className="text-lg text-blue-500" />
                                     <span>Profile</span>
                                 </Link>
                                 <Link
                                     to="#"
-                                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2"
+                                    className="px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 flex items-center gap-3 transition-colors"
                                 >
-                                    <CiSettings />
-                                    Settings
+                                    <CiSettings className="text-lg text-blue-500" />
+                                    <span>Settings</span>
                                 </Link>
                                 <Link
                                     onClick={handleLogout}
                                     to="#"
-                                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2"
+                                    className="px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 flex items-center gap-3 transition-colors"
                                 >
-                                    <RiLogoutCircleRLine />
-                                    Logout
+                                    <RiLogoutCircleRLine className="text-lg text-red-500" />
+                                    <span>Logout</span>
                                 </Link>
                             </div>
                         )}
